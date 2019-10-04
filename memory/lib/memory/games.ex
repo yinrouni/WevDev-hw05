@@ -31,7 +31,7 @@ nil, nil, nil, nil, nil]}
    new()
  end
 
- def handle_click(game, index) do 
+ def handle_click(game, index) do
      clicks = game.clicks + 1
      letters = game.letters
      present = game.present
@@ -51,8 +51,19 @@ nil, nil, nil, nil, nil]}
 	|> Map.put(:second, index)
      	|> Map.put(:clickDisabled, true)
    end
-
 end
+
+  def check_match(game) do
+   if (game.first != nil && game.second != nil) do 
+    if (Enum.at(game.letters, game.first) == Enum.at(game.letters, game.second)) do
+	matched (game)
+   else
+       :timer.sleep(1000); 
+       not_match(game)
+   end
+  end
+end 
+  
   def matched (game) do 
     game
     |> Map.put(:first, nil)

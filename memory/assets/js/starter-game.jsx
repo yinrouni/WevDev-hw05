@@ -52,7 +52,7 @@ class Memory extends React.Component{
     this.setState(view.game);
   }
   handleClick(i){
-	  if (!this.state.clickDisabled){
+	 if (!this.state.clickDisabled){
 	  this.channel.push("click", {index: i})
 	  		.receive("ok", this.got_view.bind(this));
 	  } }
@@ -91,21 +91,15 @@ initRow(s, a){
   
   }
 checkMatch(){
-	if (this.state.letters[this.state.first] == this.state.letters[this.state.second]){
-		this.channel.push("match", {})
+
+		this.channel.push("check_match", {})
 			.receive("ok", this.got_view.bind(this));
-	}
-	else {
-		setTimeout(() => {this.channel.push("not_match", {})
-			.receive("ok", this.got_view.bind(this));}, 1000);
 		
-	}
 	
 }
 	render(){
-	if (this.state.first != null && this.state.second != null){
-		this.checkMatch();
-	}
+	 if (this.state.first != null && this.state.second != null){
+		this.checkMatch();}
 	
 	let numClicks = this.state.clicks;
 		return (

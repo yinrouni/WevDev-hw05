@@ -32,21 +32,13 @@ def handle_in("reset", %{}, socket) do
     {:reply, {:ok, %{ "game" => Game.client_view(game)}}, socket}
   end	
 
-def handle_in("match", %{}, socket) do 
+def handle_in("check_match", %{}, socket) do 
 	name = socket.assigns[:name]
-	game = Game.matched(socket.assigns[:game])
+	game = Game.check_match(socket.assigns[:game])
 	socket = assign(socket, :game, game)
 	BackupAgent.put(name, game)
-    {:reply, {:ok, %{ "game" => Game.client_view(game)}}, socket}
-  end
-
-def handle_in("not_match", %{}, socket) do 
-	name = socket.assigns[:name]
-	game = Game.not_match(socket.assigns[:game])
-	socket = assign(socket, :game, game)
-	BackupAgent.put(name, game)
-    {:reply, {:ok, %{ "game" => Game.client_view(game)}}, socket}
-  end
+    {:reply, {:ok, %{"game" => Game.client_view(game)}}, socket}
+  end 
 
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
